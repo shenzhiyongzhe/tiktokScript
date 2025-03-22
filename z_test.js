@@ -56,31 +56,3 @@ GetCaptureScreenPermission()
 // StopScript()
 // humanSwipe([50, 300, 600, 120], [70, 1200, 600, 170], [30, 100])
 
-const getParticipateInfo = () =>
-{
-    const info = {}
-    const blessingBagTitle = text("已参与").findOne(2000)
-    if (!blessingBagTitle)
-    {
-        return info;
-    }
-    console.log(blessingBagTitle)
-    const count = blessingBagTitle.parent().childCount()
-    // if (count < 12)
-    // {
-    //     return info
-    // }
-    const parent = blessingBagTitle.parent()
-
-    for (let i = 0; i < count; i++)
-    {
-        console.log(i + ": " + parent.child(i).text())
-    }
-    info.countDown = parent.child(7).text()
-    info.totalBag = parseInt(parent.child(1).text())
-    info.participants = parseInt(parent.child(3).text())
-
-    console.log("count: " + JSON.stringify(info))
-}
-
-getParticipateInfo()

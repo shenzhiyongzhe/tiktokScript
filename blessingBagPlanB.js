@@ -4,36 +4,6 @@ const { launchAweme, LoadImgList, FindImgInList, StopScript, RandomPress, Recycl
 const blessingBagImgList = LoadImgList("blessingBag");
 const popupCloseImgList = LoadImgList("popupClose");
 
-const shortVideoQueue = {
-    queue: [],
-    getLength: function ()
-    {
-        return this.queue.length
-    },
-    getCurrent: function ()
-    {
-        let index = 0;
-        const user_name = id("user_name").findOne(200)
-        if (user_name)
-        {
-            index = this.getTheIndex(user_name.text())
-        }
-        return this.queue[index]
-    },
-    getTheIndex: function (user_name)
-    {
-        let index = -1;
-        this.queue.map(item =>
-        {
-            if (item.user_name == user_name)
-            {
-                index = item.index;
-            }
-        })
-        return index;
-    }
-}
-
 const findBlessingBag = () => FindImgInList(blessingBagImgList, [3, 158, 340, 179])
 const havePopupClose = () => FindImgInList(popupCloseImgList, [347, 1105, 30, 55])
 
@@ -68,12 +38,17 @@ const sendComment = () =>
 const getBlessingInfo = () =>
 {
     let haveBlessingBag = false;
-    for (let i = 0; i < 10; i++)
+    for (let i = 0; i < 8; i++)
     {
         haveBlessingBag = findBlessingBag()
         if (haveBlessingBag)
         {
             RandomPress([haveBlessingBag.x, haveBlessingBag.y, 10, 10], 2)
+            break;
+        }
+        if (text("直播已结束").findOne(20))
+        {
+            console.log("直播已结束")
             break;
         }
         let delay = random(1000, 2000) / 1000
@@ -103,7 +78,7 @@ const getBlessingInfo = () =>
     info.participants = parseInt(parent.child(1).text().split("人")[0])
     info.winningProbability = (info.totalBag / info.participants).toFixed(2)
 
-    if (info.countDown < 120 || info.winningProbability > 0.1)
+    if (info.countDown < 120 || (info.winningProbability > 0.1 && info.countDown < 300) || info.totalDiamond >= 100)
     {
         const haveSendComment = sendComment()
         if (haveSendComment)
@@ -229,5 +204,5 @@ const blessingBagFlow = () =>
     }
 }
 
-module.exports = { blessingBagFlow }
-// blessingBagFlow()
+// module.exports = { blessingBagFlow }
+blessingBagFlow()

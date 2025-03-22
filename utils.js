@@ -85,11 +85,11 @@ const RandomPress = ([startX, startY, w, h], delay) =>
 };
 const swipeDown = () =>
 {
-    humanSwipe([50, 300, 600, 120], [70, 1200, 600, 170], [30, 100])
+    humanSwipe([96, 292, 543, 131], [90, 1200, 542, 136], [30, 100])
 }
 const swipeUp = () =>
 {
-    humanSwipe([70, 1200, 600, 170], [50, 300, 600, 120], [30, 100])
+    humanSwipe([90, 1200, 542, 136], [96, 292, 543, 131], [50, 100])
 }
 
 const humanSwipe = (startRegion, endRegion, durationLimit) => 
